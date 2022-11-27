@@ -1,0 +1,11 @@
+.form-validate span.error {
+    display: none;
+}
+
+.form-validate input:invalid[focused="true"] {
+    border: 1px solid rgba(var(--bs-danger-rgb));
+}
+
+.form-validate input:invalid[focused="true"] ~ span.error {
+    display: block;
+}
