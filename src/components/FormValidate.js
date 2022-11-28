@@ -15,7 +15,7 @@ export default function FormValidate() {
       field: 'control',
       id: 'username',
       name: 'username',
-      type: 'date',
+      type: 'text',
       placeholder: 'Nome de usuário',
       errorMessage: 'O usuário deve ter entre 3-16 caracteres e não pode conter caracteres especiais!',
       label: 'Usuário',
