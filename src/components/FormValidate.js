@@ -1,7 +1,5 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import FormField from './FormField';
 import { useState } from 'react';
@@ -13,22 +11,48 @@ export default function FormValidate() {
 
   const fields = [
     {
+      field: 'input',
       id: 'username',
       name: 'username',
       type: 'text',
-      placeholder: 'Usuário',
+      placeholder: 'Nome de usuário',
       errorMessage: 'O usuário deve ter entre 3-16 caracteres e não pode conter caracteres especiais!',
       label: 'Usuário',
       pattern: '^[A-Za-z0-9]{3,16}$',
       required: true
     },
     {
-      id: 'name',
-      name: 'name',
-      type: 'text',
-      placeholder: 'Nome',
-      errorMessage: 'O nome é obrigatório!',
-      label: 'Nome',
+      field: 'select',
+      id: 'gender',
+      name: 'gender',
+      errorMessage: 'O gênero é obrigatório!',
+      label: 'Gênero',
+      options: [
+        {label: 'Masculino', value: 'male'},
+        {label: 'Feminino', value: 'female'}
+      ],
+      required: true
+    },
+    {
+      field: 'checkbox',
+      id: 'person',
+      name: 'person',
+      type: 'radio',
+      options: [
+        {label: 'Física'},
+        {label: 'Jurídica'}
+      ],
+      errorMessage: 'O tipo de pessoa é obrigatório!',
+      label: 'Pessoa',
+      required: true
+    },
+    {
+      field: 'textarea',
+      id: 'description',
+      name: 'description',
+      placeholder: 'Descrição',
+      errorMessage: 'A descrição é obrigatória!',
+      label: 'Descrição',
       required: true
     }
   ];
@@ -44,8 +68,6 @@ export default function FormValidate() {
   return (
     <div className='form-validate my-5 m-auto'>
       <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col sm={12}>
           {fields.map((field) => (
             <FormField
               key={field.id}
@@ -54,8 +76,6 @@ export default function FormValidate() {
               onChange={onChange}
             />
           ))}
-          </Col>
-        </Row>
 
         <div className='d-grid gap-2'>
           <Button
