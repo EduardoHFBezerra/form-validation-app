@@ -1,11 +1,10 @@
 import './FormField.css';
 import React from 'react';
-import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 
 export default function FormField(props) {
   const [focused, setFocused] = useState(false);
-  const { label, field, errorMessage, onChange, options, ...fieldProps } = props;
+  const { field, label, errorMessage, onChange, options, ...fieldProps } = props;
 
   const handleFocus = (e) => {
     setFocused(true);
@@ -13,69 +12,100 @@ export default function FormField(props) {
 
   return (
     <>
-      <Form.Group className='mb-3'>
-        <Form.Label className='col-form-label'>{label}</Form.Label>
-        {(() => {
-          switch (field) {
-            case 'input':
-              return (
-                <Form.Control
+      {(() => {
+        switch (field) {
+          case 'control':
+            return (
+              <>
+                {
+                fieldProps.type === 'radio' ||
+                fieldProps.type === 'checkbox' ? (
+                  <>
+                    {options.map((option) => (
+                      <div key={option.id} className='mb-3 form-check'>
+                        <input
+                          {...fieldProps}
+                          onChange={onChange}
+                          onBlur={handleFocus}
+                          focused={focused.toString()}
+                          label={option.label}
+                          id={`option-${option.id}`}
+                          className='form-check-input'
+                        />
+                        <label
+                          className='form-check-label'
+                          htmlFor={`option-${option.id}`}
+                        >
+                          {option.label}
+                        </label>
+                        <small className='error text-danger'>
+                          {errorMessage}
+                        </small>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <div className='mb-3'>
+                    <label htmlFor={fieldProps.id} className='form-label'>
+                      {label}
+                    </label>
+                    <input
+                      {...fieldProps}
+                      onChange={onChange}
+                      onBlur={handleFocus}
+                      focused={focused.toString()}
+                      className='form-control'
+                    />
+                    <small className='error text-danger'>{errorMessage}</small>
+                  </div>
+                )}
+              </>
+            );
+          case 'select':
+            return (
+              <div className='mb-3'>
+                <label htmlFor={fieldProps.id} className='form-label'>
+                  {label}
+                </label>
+                <select
                   {...fieldProps}
                   onChange={onChange}
                   onBlur={handleFocus}
                   focused={focused.toString()}
-                />
-              );
-            case 'select':
-              return (
-                <Form.Select
-                  {...fieldProps}
-                  onChange={onChange}
-                  onBlur={handleFocus}
-                  focused={focused.toString()}
-                  defaultValue=''
+                  className='form-select'
                 >
-                  <option value='' disabled>Selecione...</option>
+                  <option value='' disabled>
+                    Selecione...
+                  </option>
                   {options.map((option) => (
-                    <option 
-                      key={option.value}
-                      value={option.value}
-                    >
+                    <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
-                </Form.Select>
-              );
-            case 'textarea':
-              return (
-                <Form.Control
-                  {...fieldProps}
-                  as='textarea'
-                  onChange={onChange}
-                  onBlur={handleFocus}
-                  focused={focused.toString()}
-                ></Form.Control>
-              );
-            default:
-              return (
-                <>
-                {options.map((option) => (
-                <Form.Check
-                  key={option.label}
+                </select>
+                <small className='error text-danger'>{errorMessage}</small>
+              </div>
+            );
+          case 'textarea':
+            return (
+              <div className='mb-3'>
+                <label htmlFor={fieldProps.id} className='form-label'>
+                  {label}
+                </label>
+                <textarea
                   {...fieldProps}
                   onChange={onChange}
                   onBlur={handleFocus}
                   focused={focused.toString()}
-                  label={option.label}
-                  id={`option-${option.label}`}
-                />
-                ))}
-                </>
-              );
-          }
-        })()}
-        <Form.Text className='error text-danger'>{errorMessage}</Form.Text>
-      </Form.Group>
+                  className='form-control'
+                ></textarea>
+                <small className='error text-danger'>{errorMessage}</small>
+              </div>
+            );
+          default:
+            return <></>;
+        }
+      })()}
     </>
   );
 }

@@ -1,18 +1,21 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import FormField from './FormField';
 import { useState } from 'react';
 
 export default function FormValidate() {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({
+    username: '',
+    gender: '',
+    person: '',
+    description: ''
+  });
 
   const fields = [
     {
-      field: 'input',
+      field: 'control',
       id: 'username',
       name: 'username',
-      type: 'text',
+      type: 'date',
       placeholder: 'Nome de usuário',
       errorMessage: 'O usuário deve ter entre 3-16 caracteres e não pode conter caracteres especiais!',
       label: 'Usuário',
@@ -32,16 +35,15 @@ export default function FormValidate() {
       required: true
     },
     {
-      field: 'checkbox',
+      field: 'control',
       id: 'person',
       name: 'person',
       type: 'radio',
       options: [
-        {label: 'Física'},
-        {label: 'Jurídica'}
+        {id: 1, label: 'Pessoa Física'},
+        {id: 2, label: 'Pessoa Jurídica'}
       ],
       errorMessage: 'O tipo de pessoa é obrigatório!',
-      label: 'Pessoa',
       required: true
     },
     {
@@ -65,7 +67,7 @@ export default function FormValidate() {
 
   return (
     <div className='form-validate my-5 m-auto'>
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
           {fields.map((field) => (
             <FormField
               key={field.id}
@@ -76,15 +78,14 @@ export default function FormValidate() {
           ))}
 
         <div className='d-grid gap-2'>
-          <Button
-            variant='primary'
+          <button
             type='submit'
-            className='border-0 p-3 rounded-5 mt-3'
+            className='btn btn-primary border-0 p-3 rounded-5 mt-3'
           >
             Enviar
-          </Button>
+          </button>
         </div>
-      </Form>
+      </form>
     </div>
   )
 }
