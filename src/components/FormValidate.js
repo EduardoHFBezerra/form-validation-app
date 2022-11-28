@@ -59,6 +59,8 @@ export default function FormValidate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log('Success!!!');
   };
 
   const onChange = (e) => {
@@ -66,7 +68,7 @@ export default function FormValidate() {
   };
 
   return (
-    <div className='form-validate my-5 m-auto'>
+    <div className='form-validate my-5 m-auto bg-white rounded-3 p-5 border border-secondary'>
       <form onSubmit={handleSubmit}>
           {fields.map((field) => (
             <FormField
@@ -80,7 +82,7 @@ export default function FormValidate() {
         <div className='d-grid gap-2'>
           <button
             type='submit'
-            className='btn btn-primary border-0 p-3 rounded-5 mt-3'
+            className='btn btn-primary border-0 p-3 rounded-3 mt-3'
           >
             Enviar
           </button>
