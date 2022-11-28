@@ -5,9 +5,7 @@ import FormField from './FormField';
 import { useState } from 'react';
 
 export default function FormValidate() {
-  const [values, setValues] = useState({
-    username: ''
-  });
+  const [values, setValues] = useState({});
 
   const fields = [
     {
